@@ -1,0 +1,86 @@
+# =============================================================================
+# Git ignore for the security-research workspace
+# -----------------------------------------------------------------------------
+# Derived from an actual inspection of this repository's contents plus the
+# standard categories requested for a project of this type. Organized as:
+#   (A) sensitive material actually found on disk (highest priority), then
+#   (B) general local/env/IDE/OS hygiene patterns.
+# Intentional project artifacts (.clinerules/, knowledge/, evidence/*.md,
+# reports/, templates) are NOT ignored.
+# =============================================================================
+
+# ---------------------------------------------------------------------------
+# (A) SECURITY-TESTING ARTIFACTS FOUND IN THIS REPO  (sensitive / local-only)
+# ---------------------------------------------------------------------------
+# Raw HTTP request/response dumps and scratch captures containing live
+# session cookies (PHPSESSID, dvwaSession, security) and DVWA admin/DB
+# credential material. Do NOT version-control.
+/work/
+/evidence/reporting/raw/
+
+# ---------------------------------------------------------------------------
+# (B1) Local configuration & secrets
+# ---------------------------------------------------------------------------
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.crt
+*.p12
+*.pfx
+*.der
+id_rsa
+id_ed25519
+*.secret
+secrets/
+
+# ---------------------------------------------------------------------------
+# (B2) Logs, debug output, temp files, caches
+# ---------------------------------------------------------------------------
+*.log
+tmp/
+temp/
+*.tmp
+*.swp
+*~
+cache/
+.cache/
+
+# ---------------------------------------------------------------------------
+# (B3) IDE / editor metadata
+# ---------------------------------------------------------------------------
+.vscode/
+.idea/
+*.iml
+.vs/
+
+# ---------------------------------------------------------------------------
+# (B4) Language / runtime caches & virtual environments
+# ---------------------------------------------------------------------------
+__pycache__/
+*.pyc
+node_modules/
+.venv/
+venv/
+
+# ---------------------------------------------------------------------------
+# (B5) OS-specific files
+# ---------------------------------------------------------------------------
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ---------------------------------------------------------------------------
+# (B6) Proxy / capture tooling state (e.g. Burp)
+# ---------------------------------------------------------------------------
+*.burp
+BurpSuite*
+
+# ---------------------------------------------------------------------------
+# (B7) Docker / runtime state & local volumes
+# ---------------------------------------------------------------------------
+*.pid
+*.sock
+docker/volumes/
+data/db/
