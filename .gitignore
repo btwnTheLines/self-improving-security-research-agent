@@ -15,7 +15,13 @@
 # Raw HTTP request/response dumps and scratch captures containing live
 # session cookies (PHPSESSID, dvwaSession, security) and DVWA admin/DB
 # credential material. Do NOT version-control.
-/work/
+/work/*
+# Narrow exception: the verification recipe generator, its regression test,
+# and its example input are deliberate project artifacts and ARE versioned.
+# Everything else under work/ (scratch captures, raw dumps) stays ignored.
+!/work/verification_recipe_generator.py
+!/work/test_verification_recipe.py
+!/work/verification_recipe_example_input.json
 /evidence/reporting/raw/
 
 # ---------------------------------------------------------------------------

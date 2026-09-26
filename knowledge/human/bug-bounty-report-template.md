@@ -15,6 +15,21 @@ observation, hypothesis, or evidence-lacking suspicion, it is **not** reported a
 a vulnerability; it is recorded as such (e.g., in an assessment log / hypotheses
 list).
 
+Reporting also requires that the **HUMAN MANUAL VERIFICATION** gate (per
+`.clinerules/06-verification.md`) has passed. A machine/agent-confirmed finding is
+**NOT reportable** until a human has manually reproduced and validated it.
+
+## Human verification outcome (required)
+
+Every report must record exactly one outcome for the human-verification gate:
+
+- **Not verified** — no human manual verification has (yet) been performed;
+  the finding is not reportable.
+- **Human verified** — a human manually reproduced and validated the finding;
+  reportable subject to all other reporting requirements.
+- **Verification failed / not reproduced** — human reproduction did not confirm
+  the finding; it is not reportable and should be re-opened at the test stage.
+
 ## Evidence hierarchy (label explicitly inside the report)
 
 Use exactly one of these statuses for the finding and keep the categories
@@ -56,6 +71,11 @@ target-specific jargon unless the evidence requires it.
 
 ## 3. Confirmation status
 One of: Observation / Hypothesis / Evidence / **Confirmed vulnerability** / Impact.
+
+## 3a. Human verification outcome
+One of: **Not verified** / **Human verified** / **Verification failed — not reproduced**
+(required per `.clinerules/06-verification.md` and `.clinerules/05-reporting.md`).
+A finding that is not "Human verified" must not be presented as report-ready.
 
 ## 4. Affected component
 The specific function/page/endpoint and its role in the application, stated from

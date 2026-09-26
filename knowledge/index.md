@@ -22,9 +22,20 @@ common. Confirm applicability from evidence before using a module.
 | cloud object storage, IAM, metadata, management interfaces | cloud |
 | multiple of the above | activate the intersection; keep only evidence-supported classes |
 
-Cross-cutting: any identifier/role/owner handling also routes to authorization;
-any interpreter input also routes to injection; any auth flow also routes to
-session/token concerns in authentication.
+Cross-cutting: any observed **owner-scoped object reference** also routes to
+authorization — an identifier *name* alone does not (see "Identifier semantics"
+below); any interpreter input also routes to injection; any auth flow also
+routes to session/token concerns in authentication.
+
+## Confirmed-finding routing (workflow stage)
+
+A finding that reaches **confirmed** routes to two subsequent workflow stages,
+not to further class modules: (1) **Verification Recipe Generation** — emit a
+self-contained, human-executable recipe per
+`knowledge/human/verification-recipe-template.md` and
+`.clinerules/06-verification.md`; (2) **HUMAN MANUAL VERIFICATION** — a human
+reproduces and validates the finding before any report. The recipe is an
+instruction sheet, not proof; reports are never auto-submitted.
 
 Identifier semantics: an identifier-like parameter name (id, uid, user_id, ...)
 does NOT by itself establish an object-reference/authorization surface.

@@ -68,6 +68,44 @@ When a reusable improvement is identified:
 5. Identify possible negative side effects.
 6. Require human approval before modifying core rules.
 
+## Conflict Handling (before adoption)
+
+Before adopting a proposed rule, lesson, or knowledge change, perform a
+**READ-ONLY** consistency check against the existing `.clinerules/`, the relevant
+`knowledge/` entries, the foundational safety/scope rules, existing workflow
+states, and existing human-approval gates. Check for:
+
+- direct contradictions
+- precedence conflicts
+- duplicate guidance
+- overlapping rules
+- over-generalization
+- accidental weakening of safety boundaries
+- whether the proposed change is actually fixing an existing ambiguity rather
+  than requiring a new rule
+
+If a meaningful conflict is found, **DO NOT silently choose a side**: surface the
+conflict and resolve it through human approval. Never create a new rule whose
+only purpose is to silently override an existing rule.
+
+## Rule Lifecycle
+
+Rules and knowledge may be identified with one of the following states:
+
+- **ACTIVE**
+- **UNDER REVIEW**
+- **SUPERSEDED**
+- **RETIRED**
+
+There is **no automatic expiration, retirement, or deletion** of rules or
+knowledge. Retirement, removal, consolidation, or weakening requires **human
+approval**, and approved changes require appropriate regression validation.
+
+Conduct a periodic (lightweight) review for: duplicate rules, overlapping rules,
+stale or superseded rules, excessive rule accumulation, rules causing unnecessary
+testing friction, and rules whose original justification no longer applies. The
+goal is **controlled simplification**, never a reduction of safeguards.
+
 ## Safety Preservation
 
 Never weaken:

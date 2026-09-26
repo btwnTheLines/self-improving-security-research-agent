@@ -1,0 +1,48 @@
+{
+  "recipe_id": "WG-03-XXE-recipe",
+  "source_finding": "evidence/reporting/wg-03-xxe.md",
+  "confirmation_status": "Confirmed vulnerability",
+  "class": "Injection (XML External Entity, XXE) — external entity resolved to a local file read primitive",
+  "component": "POST /WebGoat/xxe/simple (Content-Type: application/xml), parses a client-supplied XML <comment> document and resolves entity references inline",
+  "preconditions": [
+    "An authenticated session on 127.0.0.1:8080/WebGoat/ within the authorized lab boundary only.",
+    "Ability to set an XML Content-Type on the request.",
+    "Scope: only 127.0.0.1:8080/WebGoat/. No external hosts, WebWolf, or other ports."
+  ],
+  "reproduction_steps": [
+    "Establish an authenticated session to the WebGoat app.",
+    "Send the weaponized XML body below to /WebGoat/xxe/simple with Content-Type: application/xml.",
+    "Observe the response: the assignment completes (lessonCompleted: true), indicating the external entity was processed.",
+    "Repeat with the benign control body, observe it is rejected (lessonCompleted: false).",
+    "Record both the probe and the control response exactly."
+  ],
+  "minimal_request": "POST /WebGoat/xxe/simple HTTP/1.1\nHost: 127.0.0.1:8080\nContent-Type: application/xml\n\n<?xml version=\"1.0\"?><!DOCTYPE comment [ <!ENTITY xxe SYSTEM \"file:///etc/passwd\"> ]><comment><text>&xxe;</text></comment>",
+  "control_test": "Same endpoint with a benign body that declares no external entity:\n<comment><text>hello</text></comment>\nExpected control outcome: rejected (lessonCompleted: false), isolating the injected external entity as the only differential cause of the vulnerable behavior.",
+  "expected_vulnerable": "If the parser resolves external entities, the weaponized body completes the assignment (file-read primitive), while the benign control is rejected.",
+  "expected_safe": "If the parser were securely configured, DOCTYPE/external-entity declarations would be rejected or ignored and the weaponized entity would not complete the assignment.",
+  "evidence_to_capture": [
+    "Full request and response for the weaponized payload (status line, headers, body).",
+    "The lessonCompleted/feedback JSON fields in the response.",
+    "Full request and response for the benign control (must reject).",
+    "Only WebGoat's own synthetic data and the single canonical /etc/passwd file; no volume of files."
+  ],
+  "evidence_files": [
+    "evidence/reporting/raw/wg_xxe_simple.txt",
+    "evidence/reporting/raw/wg_xxe_simple_control.txt"
+  ],
+  "safety_limits": [
+    "Within 127.0.0.1:8080/WebGoat/ only; no external/outbound requests at any point.",
+    "No DoS, no destructive actions, no resource exhaustion.",
+    "Do not read a large volume of files; the single canonical /etc/passwd demonstrates the primitive."
+  ],
+  "stop_conditions": [
+    "STOP if the entity resolution causes any outbound connection to a system outside the WebGoat boundary.",
+    "STOP as soon as sufficient evidence (entity-resolved / control-rejected) has been captured.",
+    "STOP rather than attempting to exfiltrate large or unrelated files."
+  ],
+  "cleanup": [
+    "No persistent data is created by this probe; any temporary session files used during reproduction should be cleared.",
+    "Verify no unexpected artifacts were written on the WebGoat host."
+  ],
+  "reporting_notes": "Frame at class level (XML parser resolves external entities → file-read / SSRF primitive). Note in the report the limitation that absolute file-content exfiltration into the HTTP response was not observed in this build; the confirmed evidence is that the external-entity pointer was processed (weaponized-only grading success with a rejected benign control)."
+}

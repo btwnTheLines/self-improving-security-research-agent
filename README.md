@@ -10,7 +10,7 @@ behavioral contract lives in `.clinerules/`.
 | --- | --- | --- |
 | `.clinerules/` | Binding behavioral rules: behaviour, scope, recon, testing, validation, reporting, self-improvement. Always govern. | Both |
 | `knowledge/` | Reusable security knowledge (decision support, never authority). | `human/` human-readable; `machine/` token-efficient entries |
-| `evidence/` | Records from completed assessments (recon, testing, reporting, self-improvement) + their raw artifacts. | Both |
+| `evidence/` | Records from completed assessments (recon, testing, reporting, verification, self-improvement) + their raw artifacts. | Both |
 | `reports/` | Draft/internal bug-bounty reports (human review; no submission). | Human |
 | `work/` | Scratch / working artifacts captured during assessments. | Data |
 | `findings/`, `labs/`, `programs/` | Empty organizational placeholders (intentionally preserved). | n/a |
@@ -25,6 +25,7 @@ behavioral contract lives in `.clinerules/`.
 - `03-testing.md` — testing authorization, approval gates, minimum testing.
 - `04-validation.md` — verifying generated artifacts, guardrail preservation.
 - `05-reporting.md` — reproducible evidence, class-level framing, report gate.
+- `06-verification.md` — mandatory verification-recipe generation + human manual-verification gate before reporting.
 - `006-self-improvement.md` — learning loop, generalization, human approval.
 
 ## Security knowledge
@@ -51,8 +52,18 @@ approval; consequential testing requires human approval.
 
 `evidence/` subfolders: `recon/` (attack-surface characterization), `testing/`
 (per-test records), `reporting/` (per-finding reports + `raw/` request/response
-artifacts), `self-improvement/` (learning-loop records & this cleanup report).
-See `evidence/README.md`.
+artifacts), `verification/` (human-executable verification recipes for confirmed
+findings — the manual-verification gate), `self-improvement/` (learning-loop
+records & this cleanup report). See `evidence/README.md`.
+
+## How verification recipes are generated
+
+Per `.clinerules/06-verification.md`, every **confirmed** finding is followed by a
+human-executable **Verification Recipe** (template:
+`knowledge/human/verification-recipe-template.md`) that a human manually verifies
+before any report. A recipe is an instruction sheet, **not proof**, and reports
+are never auto-submitted. Generator + regression test live in `work/`
+(`verification_recipe_generator.py`, `test_verification_recipe.py`).
 
 ## How reports are generated
 

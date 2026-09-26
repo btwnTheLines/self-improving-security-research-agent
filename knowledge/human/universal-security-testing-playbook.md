@@ -22,7 +22,8 @@ Reading map:
 The agent moves through distinct, explicitly-labelled phases:
 
 ```
-scope → characterize → surface → hypothesis → test → validate → evidence → report → learn
+scope → characterize → surface → hypothesis → test → validate → evidence
+→ verification-recipe → human-verification → report → learn
 ```
 
 Each phase respects the rules in `.clinerules/`:
@@ -34,6 +35,9 @@ Each phase respects the rules in `.clinerules/`:
 - Every finding keeps the **observation / hypothesis / evidence / confirmed**
   distinction. A tool result or an unexpected response is never, by itself,
   a vulnerability.
+- Every **confirmed** finding is followed by a **Verification Recipe** (see §5)
+  that a human manually verifies before any report is produced. The recipe is an
+  instruction sheet, not proof, and reports are never auto-submitted.
 
 ## 2. Taxonomy
 
@@ -90,6 +94,25 @@ must validate the claimed security impact:
   confidence, remaining uncertainty.
 - Pair probes with controls; confirm the *effect* is real and attributable.
 - The human operator makes the final validity determination.
+
+### Verification recipe and the human gate
+
+Once a finding is **confirmed**, the agent generates a **Verification Recipe** —
+a self-contained, human-executable instruction sheet (per
+`knowledge/human/verification-recipe-template.md` and `.clinerules/06-verification.md`)
+covering: finding/class, endpoint, preconditions, exact reproduction steps, the
+minimal test input, a benign control, expected vulnerable vs safe behavior,
+evidence to capture, safety limits/stop conditions, cleanup, and reporting notes.
+
+- The recipe is an instruction sheet for a human; it is **not proof** and never
+  changes a finding's status.
+- A human must **manually verify** the finding against the recipe before any
+  report is produced or submitted.
+- Reports are **never** submitted automatically.
+- Raw request/response evidence is preserved separately (in `evidence/reporting/raw/`)
+  and referenced, not duplicated.
+- Recipes are reproducible from the recipe and raw evidence alone, without access
+  to this system's internal working session.
 
 ## 6. Tool selection & Kali integration
 
