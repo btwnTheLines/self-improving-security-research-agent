@@ -14,3 +14,6 @@ Token-efficient class entries for model consumption.
 Modules: `injection` · `client` · `authentication` · `authorization` · `web` ·
 `files` · `api` · `business-logic` · `configuration` · `protocol` ·
 `modern-apps` · `cloud`.
+
+Cross-cutting (consult alongside any activated class module, not instead of it):
+`methodology` — case-study-distilled, technology-agnostic research methodology.

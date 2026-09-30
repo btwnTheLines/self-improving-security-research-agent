@@ -25,6 +25,22 @@
 /evidence/reporting/raw/
 
 # ---------------------------------------------------------------------------
+# (A2) WEBGOAT / LAB-SPECIFIC LEARNING ARTIFACTS (local growth content, not
+#      general bug-bounty / security-testing knowledge)
+# ---------------------------------------------------------------------------
+# WebGoat case-study analyses and reports used to synthesize general methodology
+# (knowledge/machine/methodology.md) but not directly applicable to general
+# ethical-hacking / bug-bounty testing.
+knowledge/case-studies/
+# WebGoat-specific verification recipes (learning-reproduction steps; not
+# reportable general test recipes).
+evidence/verification/wg-*.md
+# WebGoat-specific reporting evidence and recon / endpoint maps.
+evidence/reporting/wg-*.md
+evidence/recon/webgoat-*.md
+
+
+# ---------------------------------------------------------------------------
 # (B1) Local configuration & secrets
 # ---------------------------------------------------------------------------
 .env

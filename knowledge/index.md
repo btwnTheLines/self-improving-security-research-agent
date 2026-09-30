@@ -25,7 +25,11 @@ common. Confirm applicability from evidence before using a module.
 Cross-cutting: any observed **owner-scoped object reference** also routes to
 authorization — an identifier *name* alone does not (see "Identifier semantics"
 below); any interpreter input also routes to injection; any auth flow also
-routes to session/token concerns in authentication.
+routes to session/token concerns in authentication. Whenever a class module is
+activated, also consult `machine/methodology.md` — the cross-cutting,
+case-study-distilled research methodology (differential-with-control testing,
+trust-boundary reasoning, staging by collateral, chaining benign gadgets) that
+applies across all classes. It is decision support, not a license.
 
 ## Confirmed-finding routing (workflow stage)
 
@@ -78,6 +82,10 @@ See `kali-wsl-capabilities.md` for what is actually installed.
 
 injection · client · authentication · authorization · web · files · api ·
 business-logic · configuration · protocol · modern-apps · cloud
+
+Cross-cutting module consulted alongside any activated class:
+`machine/methodology.md` (case-study-distilled, technology-agnostic research
+methodology).
 
 Machine entry format used in `machine/<module>.md`:
 `ID · WHEN · SURFACE · OBSERVE · HYPOTHESIS · TEST · ADAPT · CONFIRM · IMPACT ·
